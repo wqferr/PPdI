@@ -64,6 +64,9 @@ instance/
 # Sphinx documentation
 docs/_build/
 
+# Datasets
+data/**
+
 # PyBuilder
 target/
 
