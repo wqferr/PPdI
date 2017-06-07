@@ -1,26 +1,47 @@
-from keras.datasets import cifar10
-from keras import utils
+#Author: Eduardo Santos Carlos de Souza
+
+#Usage:
+#argv[1] = filename of model to evaluate
+#argv[2] = filename of numpy-array file of the images
+#argv[3] = filename of numpy-array file of the labels
+#argv[4] = filename to save the predictions' array
+
 from keras import models
+from os import path
 import numpy as np
+import sys
 
-vgg16_imgnet = models.load_model("vgg16_trained.h5")
-vgg16_imgnet.summary()
+model_filename = "../Data/vgg16_imgnet.h5"
+if (path.isfile("../Data/vgg16_trained.h5")):
+	model_filename = "../Data/vgg16_trained.h5"
+images_filename = "../Data/Datasets/keras/images.npy"
+labels_filename = "../Data/Datasets/keras/labels.npy"
+out_filename =  "../Data/predictions.npy"
+if (len(sys.argv) >= 2):
+	model_filename = sys.argv[1]
+if (len(sys.argv) >= 4):
+	images_filename = sys.argv[2]
+	labels_filename = sys.argv[3]
+if (len(sys.argv) >= 5):
+	out_filename = sys.argv[4]
 
-(img_train, class_train), (img_test, class_test) = cifar10.load_data()
-class_test = utils.np_utils.to_categorical(class_test, 10)
+images = np.load(images_filename, mmap_mode='r')
+labels = np.load(labels_filename, mmap_mode='r')
+cnn = models.load_model(model_filename)
+cnn.summary()
 
-predictions = vgg16_imgnet.predict(img_test, batch_size=256)
+predictions = cnn.predict(images, batch_size=256)
+np.save(out_filename, predictions)
 
-test_size = 10000
-pred_class = np.zeros(test_size)
-right_class = np.zeros(test_size)
-for i in range(test_size):
+pred_class = np.zeros(labels.shape[0])
+right_class = np.zeros(labels.shape[0])
+for i in range(labels.shape[0]):
 	pred_class[i] = np.argmax(predictions[i])
-	right_class[i] = np.argmax(class_test[i])
+	right_class[i] = np.argmax(labels[i])
 
 print(right_class)
 print(pred_class)
 
 erros = np.count_nonzero(right_class - pred_class)
 print("Errors: %d" % erros)
-print("Accuracy: %lf" % ((test_size - erros)/test_size))
+print("Accuracy: %lf" % ((labels.shape[0] - erros)/labels.shape[0]))
