@@ -31,7 +31,7 @@ if (len(sys.argv) >= 6):
 if (len(sys.argv) >= 7):
 	out_path = sys.argv[6]
 if (len(sys.argv) >= 8):
-	out_path = path + sys.argv[7] + "-"
+	out_path = out_path + sys.argv[7] + "-"
 
 batch_size = 256
 img_gen = ImageDataGenerator(rotation_range=30.0, width_shift_range=0.2, height_shift_range=0.2, zoom_range=0.2, fill_mode='constant', cval=0.0, horizontal_flip=True, vertical_flip=False)

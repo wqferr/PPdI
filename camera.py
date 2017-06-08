@@ -7,7 +7,7 @@ model_filename = "../Data/vgg16_imgnet.h5"
 cnn = models.load_model(model_filename)
 cnn.summary()
 
-classes = ["Carro", "Moto", "Pedestre", "Pare", "Semaforo"]
+classes = ["Bicicleta", "Carro", "Cavalo", "Moto", "Pedestre", "Pare", "Proibido Estacionar", "Semaforo", "Caminhao"]
 cam = cv2.VideoCapture(0)
 while True:
 	img = cam.read()[1]

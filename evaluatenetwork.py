@@ -1,9 +1,9 @@
 #Author: Eduardo Santos Carlos de Souza
 
 #Usage:
-#argv[1] = filename of model to evaluate
-#argv[2] = filename of numpy-array file of the images
-#argv[3] = filename of numpy-array file of the labels
+#argv[1] = filename of numpy-array file of the images
+#argv[2] = filename of numpy-array file of the labels
+#argv[3] = filename of model to evaluate
 #argv[4] = filename to save the predictions' array
 
 from keras import models
@@ -17,11 +17,11 @@ if (path.isfile("../Data/vgg16_trained.h5")):
 images_filename = "../Data/Datasets/keras/images.npy"
 labels_filename = "../Data/Datasets/keras/labels.npy"
 out_filename =  "../Data/predictions.npy"
-if (len(sys.argv) >= 2):
-	model_filename = sys.argv[1]
+if (len(sys.argv) >= 3):
+	images_filename = sys.argv[1]
+	labels_filename = sys.argv[2]
 if (len(sys.argv) >= 4):
-	images_filename = sys.argv[2]
-	labels_filename = sys.argv[3]
+	model_filename = sys.argv[3]
 if (len(sys.argv) >= 5):
 	out_filename = sys.argv[4]
 

@@ -2,9 +2,9 @@
 
 #Usage:
 #argv[1] = number of epochs to train
-#argv[2] = filename of model to train
-#argv[3] = filename of numpy-array file of the images
-#argv[4] = filename of numpy-array file of the labels
+#argv[2] = filename of numpy-array file of the images
+#argv[3] = filename of numpy-array file of the labels
+#argv[4] = filename of model to train
 #argv[5] = filename to save the trained network
 
 from keras import models
@@ -21,11 +21,11 @@ labels_filename = "../Data/Datasets/keras/labels.npy"
 out_filename = "../Data/vgg16_trained.h5"
 if (len(sys.argv) >= 2):
 	epochs = int(sys.argv[1])
-if (len(sys.argv) >= 3):
-	model_filename = sys.argv[2]
+if (len(sys.argv) >= 4):
+	images_filename = sys.argv[2]
+	labels_filename = sys.argv[3]
 if (len(sys.argv) >= 5):
-	images_filename = sys.argv[3]
-	labels_filename = sys.argv[4]
+	model_filename = sys.argv[4]
 if (len(sys.argv) >= 6):
 	out_filename = sys.argv[5]
 
