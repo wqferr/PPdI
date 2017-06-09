@@ -27,14 +27,14 @@ def copy_img(lst, frm, to, rename):
 # 3 - The output root directory (default source directory)
 # 4 - The training dataset subdirectory (default 'train')
 # 5 - The test dataset subdirectory (default 'test')
-# 6 - Boolean value, true if should prepend origin directory to file copy (default true)
+# 6 - Boolean value, true if should prepend origin directory to file copy (default false)
 if __name__ == '__main__':
     test_percent = float(get_arg(1, 20)) / 100
     src_dir = get_arg(2, '.')
     out_dir = get_arg(3, src_dir)
     train_subdir = get_arg(4, 'train')
     test_subdir = get_arg(5, 'test')
-    rename = get_arg(6, 'true').strip().lower() == 'true'
+    rename = get_arg(6, 'false').strip().lower() == 'true'
 
     train_dir = os.path.join(out_dir, train_subdir)
     test_dir = os.path.join(out_dir, test_subdir)
@@ -44,10 +44,11 @@ if __name__ == '__main__':
 
 
     images = []
-    with os.scandir(src_dir) as entries:
-        for entry in entries:
-            if entry.is_file():
-                images.append(entry)
+    entries = os.scandir(src_dir)
+    for entry in entries:
+        if entry.is_file():
+            images.append(entry)
+    del entries
 
     shuffle(images)
     n_test = math.ceil(len(images) * test_percent)
