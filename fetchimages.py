@@ -16,8 +16,9 @@ class Downloader(ImageDownloader):
 # Args:
 # 1 - keyword
 # 2 - number of images (default 100)
-# 3 - number of threads (default 8)
-# 4 - save directory (default data/datasets/fetched/<KEYWORD>)
+# 3 - offset (default 0)
+# 4 - number of threads (default 8)
+# 5 - save directory (default data/datasets/fetched/<KEYWORD>)
 if __name__ == '__main__':
     keyword = argv[1]
 
@@ -27,12 +28,17 @@ if __name__ == '__main__':
         n_img = 100
 
     try:
-        n_thr = int(argv[3])
+        offset = int(argv[3])
+    except (ValueError, IndexError):
+        offset = 0
+
+    try:
+        n_thr = int(argv[4])
     except (ValueError, IndexError):
         n_thr = 8
 
     try:
-        path = argv[4]
+        path = argv[5]
     except IndexError:
         path = os.path.join('data', 'datasets', 'fetched', keyword)
 
@@ -43,4 +49,4 @@ if __name__ == '__main__':
                 root_dir=path
             ))
 
-    crawler.crawl(keyword, 0, n_img)
+    crawler.crawl(keyword, offset, n_img)
