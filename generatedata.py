@@ -18,7 +18,7 @@ import sys
 out_shape = (224, 224)
 color = 'rgb'
 dataset_rep_count = 20
-in_path = "../Data/Datasets/raw"
+in_path = "../Data/Datasets/filtered"
 out_path = "../Data/Datasets/keras/"
 if (len(sys.argv) >= 4):
 	out_shape = (int(sys.argv[1]), int(sys.argv[2]))
