@@ -36,7 +36,7 @@ test_labels = np.load(path.join(arrays_filepath,"test_labels.npy"), mmap_mode='r
 cnn = models.load_model(model_filename)
 cnn.summary()
 
-batch_size = 256
+batch_size = 128
 for i in range(epochs):
 	init_time = time.time()
 	print("Epoch: %d" % i)
