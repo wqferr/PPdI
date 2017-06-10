@@ -15,12 +15,14 @@ from math import ceil
 import numpy as np
 import time
 import sys
+import os.path
 
 out_shape = (224, 224)
 color = 'rgb'
 dataset_rep_count = 20
-in_path = "../Data/Datasets/filtered/"
-out_path = "../Data/Datasets/keras/"
+in_path = os.path.join("..", "Data", "Datasets", "filtered")
+out_path = os.path.join("..", "Data", "Datasets", "keras")
+out_prefix = ""
 rand = True
 if (len(sys.argv) >= 4):
 	out_shape = (int(sys.argv[1]), int(sys.argv[2]))
@@ -33,11 +35,11 @@ if (len(sys.argv) >= 6):
 if (len(sys.argv) >= 7):
 	out_path = sys.argv[6]
 if (len(sys.argv) >= 8):
-	out_path = out_path + sys.argv[7] + "_"
+	out_prefix = sys.argv[7] + "_"
 if (len(sys.argv) >= 9):
-	rand = bool(sys.argv[8])
+	rand = (sys.argv[8] == 'true')
 
-batch_size = 256
+batch_size = 128
 img_gen = ImageDataGenerator(fill_mode='constant', cval=0.0)
 if (rand):
 	img_gen = ImageDataGenerator(rotation_range=15.0, width_shift_range=0.2, height_shift_range=0.2, zoom_range=0.2, fill_mode='constant', cval=0.0, horizontal_flip=True, vertical_flip=False)
@@ -55,5 +57,5 @@ if (dataset_rep_count > 0):
 	print(x.shape)
 	print("Labels array: ", end="")
 	print(y.shape)
-	np.save(out_path + "images", x)
-	np.save(out_path + "labels", y)
+	np.save(os.path.join(out_path, out_prefix + "images"), x)
+	np.save(os.path.join(out_path, out_prefix + "labels"), y)

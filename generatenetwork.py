@@ -11,11 +11,12 @@ from keras.applications.vgg16 import VGG16
 from keras.layers import Input, Flatten, Dense
 from keras.models import Model
 import sys
+import os
 
 #Variaveis de entrada e saida da rede
 in_shape = (224, 224, 3)
 n_classes = 1000
-filename = "../Data/vgg16_imgnet.h5"
+filename = os.path.join("..", "Data", "vgg16_imgnet.h5")
 if (len(sys.argv) >= 4):
 	in_shape = (int(sys.argv[1]), int(sys.argv[2]), int(sys.argv[3]))
 if (len(sys.argv) >= 5):

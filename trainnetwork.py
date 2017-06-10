@@ -8,17 +8,18 @@
 #argv[3] = filename to save the trained network
 
 from keras import models, metrics
+from keras import backend
 from os import path
 import numpy as np
 import sys
 import time
 
 epochs = 30
-model_filename = "../Data/vgg16_imgnet.h5"
-if (path.isfile("../Data/vgg16_trained.h5")):
-	model_filename = "../Data/vgg16_trained.h5"
-arrays_filepath = "../Data/Datasets/keras/"
-out_filename = "../Data/vgg16_trained.h5"
+model_filename = path.join("..", "Data", "vgg16_imgnet.h5")
+if (path.isfile(path.join("..", "Data", "vgg16_trained.h5"))):
+	model_filename = path.join("..", "Data", "vgg16_trained.h5")
+arrays_filepath = path.join("..", "Data", "Datasets", "keras")
+out_filename = path.join("..", "Data", "vgg16_trained.h5")
 if (len(sys.argv) >= 2):
 	epochs = int(sys.argv[1])
 if (len(sys.argv) >= 3):
@@ -28,14 +29,14 @@ if (len(sys.argv) >= 4):
 if (len(sys.argv) >= 5):
 	out_filename = sys.argv[4]
 
-train_images = np.load(arrays_filepath+"train_images.npy", mmap_mode='r')
-train_labels = np.load(arrays_filepath+"train_labels.npy", mmap_mode='r')
-test_images = np.load(arrays_filepath+"test_images.npy", mmap_mode='r')
-test_labels = np.load(arrays_filepath+"test_labels.npy", mmap_mode='r')
+train_images = np.load(path.join(arrays_filepath,"train_images.npy"), mmap_mode='r')
+train_labels = np.load(path.join(arrays_filepath,"train_labels.npy"), mmap_mode='r')
+test_images = np.load(path.join(arrays_filepath,"test_images.npy"), mmap_mode='r')
+test_labels = np.load(path.join(arrays_filepath,"test_labels.npy"), mmap_mode='r')
 cnn = models.load_model(model_filename)
 cnn.summary()
 
-batch_size = 256
+batch_size = 128
 for i in range(epochs):
 	init_time = time.time()
 	print("Epoch: %d" % i)
@@ -47,3 +48,5 @@ for i in range(epochs):
 
 cnn.summary()
 cnn.save(out_filename)
+
+backend.clear_session()
