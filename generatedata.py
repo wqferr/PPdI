@@ -56,5 +56,5 @@ if (dataset_rep_count > 0):
 	print(x.shape)
 	print("Labels array: ", end="")
 	print(y.shape)
-	np.save(out_path + "images", x)
-	np.save(out_path + "labels", y)
+	np.save(os.path.join(out_path, "images"), x)
+	np.save(os.path.join(out_path, "labels"), y)

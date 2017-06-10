@@ -28,10 +28,10 @@ if (len(sys.argv) >= 4):
 if (len(sys.argv) >= 5):
 	out_filename = sys.argv[4]
 
-train_images = np.load(arrays_filepath+"train_images.npy", mmap_mode='r')
-train_labels = np.load(arrays_filepath+"train_labels.npy", mmap_mode='r')
-test_images = np.load(arrays_filepath+"test_images.npy", mmap_mode='r')
-test_labels = np.load(arrays_filepath+"test_labels.npy", mmap_mode='r')
+train_images = np.load(path.join(arrays_filepath,"train_images.npy"), mmap_mode='r')
+train_labels = np.load(path.join(arrays_filepath,"train_labels.npy"), mmap_mode='r')
+test_images = np.load(path.join(arrays_filepath,"test_images.npy"), mmap_mode='r')
+test_labels = np.load(path.join(arrays_filepath,"test_labels.npy"), mmap_mode='r')
 cnn = models.load_model(model_filename)
 cnn.summary()
 
