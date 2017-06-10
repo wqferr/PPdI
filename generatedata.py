@@ -15,12 +15,13 @@ from math import ceil
 import numpy as np
 import time
 import sys
+import os.path
 
 out_shape = (224, 224)
 color = 'rgb'
 dataset_rep_count = 20
-in_path = "../Data/Datasets/filtered/"
-out_path = "../Data/Datasets/keras/"
+in_path = os.path.join("..", "Data", "Datasets", "filtered")
+out_path = os.path.join("..", "Data", "Datasets", "keras")
 rand = True
 if (len(sys.argv) >= 4):
 	out_shape = (int(sys.argv[1]), int(sys.argv[2]))

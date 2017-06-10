@@ -14,11 +14,11 @@ import sys
 import time
 
 epochs = 30
-model_filename = "../Data/vgg16_imgnet.h5"
-if (path.isfile("../Data/vgg16_trained.h5")):
-	model_filename = "../Data/vgg16_trained.h5"
-arrays_filepath = "../Data/Datasets/keras/"
-out_filename = "../Data/vgg16_trained.h5"
+model_filename = path.join("..", "Data", "vgg16_imgnet.h5")
+if (path.isfile(path.join("..", "Data", "vgg16_trained.h5"))):
+	model_filename = path.join("..", "Data", "vgg16_trained.h5")
+arrays_filepath = path.join("..", "Data", "Datasets", "keras")
+out_filename = path.join("..", "Data", "vgg16_trained.h5")
 if (len(sys.argv) >= 2):
 	epochs = int(sys.argv[1])
 if (len(sys.argv) >= 3):
