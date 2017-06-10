@@ -8,6 +8,7 @@
 #argv[3] = filename to save the trained network
 
 from keras import models, metrics
+from keras import backend
 from os import path
 import numpy as np
 import sys
@@ -47,3 +48,5 @@ for i in range(epochs):
 
 cnn.summary()
 cnn.save(out_filename)
+
+backend.clear_session()
