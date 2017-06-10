@@ -40,8 +40,8 @@ if (len(sys.argv) >= 9):
 batch_size = 256
 img_gen = ImageDataGenerator(fill_mode='constant', cval=0.0)
 if (rand):
-	img_gen = ImageDataGenerator(rotation_range=30.0, width_shift_range=0.2, height_shift_range=0.2, zoom_range=0.2, fill_mode='constant', cval=0.0, horizontal_flip=True, vertical_flip=False)
-img_flow = img_gen.flow_from_directory(in_path, target_size=out_shape, class_mode='categorical', batch_size=batch_size, shuffle=False, seed=int(time.time()))
+	img_gen = ImageDataGenerator(rotation_range=15.0, width_shift_range=0.2, height_shift_range=0.2, zoom_range=0.2, fill_mode='constant', cval=0.0, horizontal_flip=True, vertical_flip=False)
+img_flow = img_gen.flow_from_directory(in_path, target_size=out_shape, class_mode='categorical', batch_size=batch_size, shuffle=False, seed=int(time.time()), save_to_dir="./temp/", save_prefix="a")
 
 if (dataset_rep_count > 0):
 	x, y = img_flow.next()
