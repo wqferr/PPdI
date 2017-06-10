@@ -28,8 +28,8 @@ vgg16_imgnet = VGG16(weights='imagenet', include_top=False, input_tensor=None, i
 vgg16_imgnet.summary()
 
 #Congelar as camadas convolucionas
-for layer in vgg16_imgnet.layers:
-	layer.trainable = False
+#for layer in vgg16_imgnet.layers:
+#	layer.trainable = False
 
 #Adicionar camada de Input
 input_layer = Input(shape=in_shape, name='input')
@@ -43,7 +43,7 @@ vgg16_imgnet_tensor = Dense(n_classes, activation='softmax', name='classifier')(
 
 #Gerar modelo
 new_vgg16_imgnet = Model(input_layer, vgg16_imgnet_tensor)
-new_vgg16_imgnet.compile(loss='mean_squared_error', optimizer='sgd')
+new_vgg16_imgnet.compile(loss='mean_squared_error', optimizer='sgd', metrics=['accuracy'])
 new_vgg16_imgnet.summary()
 
 #Salvar modelo

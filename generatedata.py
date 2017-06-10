@@ -8,6 +8,7 @@
 #argv[5] = path to load input images
 #argv[6] = path to save output arrays
 #argv[7] = prefix for the arrays' filenames
+#argv[8] = bool to apply random variations
 
 from keras.preprocessing.image import ImageDataGenerator
 from math import ceil
@@ -18,8 +19,9 @@ import sys
 out_shape = (224, 224)
 color = 'rgb'
 dataset_rep_count = 20
-in_path = "../Data/Datasets/filtered"
+in_path = "../Data/Datasets/filtered/"
 out_path = "../Data/Datasets/keras/"
+rand = True
 if (len(sys.argv) >= 4):
 	out_shape = (int(sys.argv[1]), int(sys.argv[2]))
 	if (int(sys.argv[3])):
@@ -32,9 +34,13 @@ if (len(sys.argv) >= 7):
 	out_path = sys.argv[6]
 if (len(sys.argv) >= 8):
 	out_path = out_path + sys.argv[7] + "_"
+if (len(sys.argv) >= 9):
+	rand = bool(sys.argv[8])
 
 batch_size = 256
-img_gen = ImageDataGenerator(rotation_range=30.0, width_shift_range=0.2, height_shift_range=0.2, zoom_range=0.2, fill_mode='constant', cval=0.0, horizontal_flip=True, vertical_flip=False)
+img_gen = ImageDataGenerator(fill_mode='constant', cval=0.0)
+if (rand):
+	img_gen = ImageDataGenerator(rotation_range=30.0, width_shift_range=0.2, height_shift_range=0.2, zoom_range=0.2, fill_mode='constant', cval=0.0, horizontal_flip=True, vertical_flip=False)
 img_flow = img_gen.flow_from_directory(in_path, target_size=out_shape, class_mode='categorical', batch_size=batch_size, shuffle=False, seed=int(time.time()))
 
 if (dataset_rep_count > 0):

@@ -3,13 +3,15 @@
 #Usage:
 #argv[1] = number of epochs to train
 #argv[2] = filepath of folder with numpy-array files of the images and labels for testing and training
+#Its going to look inside the directory for files names train_images.npy, train_labels.npy, test_images.npy, test_labels.npy, 
 #argv[3] = filename of model to train
 #argv[3] = filename to save the trained network
 
-from keras import models
+from keras import models, metrics
 from os import path
 import numpy as np
 import sys
+import time
 
 epochs = 30
 model_filename = "../Data/vgg16_imgnet.h5"
@@ -27,32 +29,21 @@ if (len(sys.argv) >= 5):
 	out_filename = sys.argv[4]
 
 train_images = np.load(arrays_filepath+"train_images.npy", mmap_mode='r')
-train_labels = np.load(labels_filename+"train_labels.npy", mmap_mode='r')
-test_images = np.load(images_filename+"test_images.npy", mmap_mode='r')
-test_labels = np.load(labels_filename+"test_labels.npy", mmap_mode='r')
+train_labels = np.load(arrays_filepath+"train_labels.npy", mmap_mode='r')
+test_images = np.load(arrays_filepath+"test_images.npy", mmap_mode='r')
+test_labels = np.load(arrays_filepath+"test_labels.npy", mmap_mode='r')
 cnn = models.load_model(model_filename)
 cnn.summary()
 
-#batch_size = 32
-image_count = test_labels.shape[0]
-
-loss = 0
-accu = 0
-predictions = np.zeros(test_labels.shape)
-pred_class = np.zeros(image_count)
-right_class = np.zeros(image_count)
+batch_size = 256
 for i in range(epochs):
+	init_time = time.time()
 	print("Epoch: %d" % i)
-	cnn.fit(train_images, train_labels, epochs=1, batch_size=32, verbose=False)
-	loss = cnn.evaluate(train_images, train_labels, batch_size=256)
-	predictions = cnn.predict(test_images, batch_size=256)
-
-	for j in range(image_count):
-		pred_class[i] = np.argmax(predictions[i])
-		right_class[i] = np.argmax(test_labels[i])
-
-	accu = (image_count-np.count_nonzero(right_class - pred_class))/image_count
-	print("Loss %.4lf\nAccuracy: %.4lf" % loss, accu)
+	train_score = cnn.fit(train_images, train_labels, epochs=1, batch_size=batch_size, verbose=False)
+	test_score = cnn.evaluate(test_images, test_labels, batch_size=batch_size, verbose=False)
+	print("Train Loss: %.4lf\nTrain Accuracy: %.4lf" % (train_score.history['loss'][0], train_score.history['acc'][0]))
+	print("Test Loss: %.4lf\nTest Accuracy: %.4lf" % (test_score[0], test_score[1]))
+	print("Time: %ds\n" % (time.time()-init_time))
 
 cnn.summary()
 cnn.save(out_filename)
