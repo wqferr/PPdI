@@ -40,7 +40,7 @@ batch_size = 128
 for i in range(epochs):
 	init_time = time.time()
 	print("Epoch: %d" % i)
-	train_score = cnn.fit(train_images, train_labels, epochs=1, batch_size=batch_size, verbose=False)
+	train_score = cnn.fit(train_images, train_labels, epochs=1, batch_size=batch_size, verbose=True)
 	test_score = cnn.evaluate(test_images, test_labels, batch_size=batch_size, verbose=False)
 	print("Train Loss: %.4lf\nTrain Accuracy: %.4lf" % (train_score.history['loss'][0], train_score.history['acc'][0]))
 	print("Test Loss: %.4lf\nTest Accuracy: %.4lf" % (test_score[0], test_score[1]))
