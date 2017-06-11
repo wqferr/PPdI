@@ -10,8 +10,8 @@
 from keras.applications.vgg16 import VGG16
 from keras.layers import Input, Flatten, Dense
 from keras.models import Model
+import os.path
 import sys
-import os
 
 #Variaveis de entrada e saida da rede
 in_shape = (224, 224, 3)
@@ -38,8 +38,8 @@ vgg16_imgnet_tensor = vgg16_imgnet(input_layer)
 
 #Adicionar camadas fully-connected
 vgg16_imgnet_tensor = Flatten(name='flatten')(vgg16_imgnet_tensor)
-vgg16_imgnet_tensor = Dense(1024, activation='relu', name='fullyconnected_1')(vgg16_imgnet_tensor)
-vgg16_imgnet_tensor = Dense(1024, activation='relu', name='fullyconnected_2')(vgg16_imgnet_tensor)
+vgg16_imgnet_tensor = Dense(4096, activation='relu', name='fullyconnected_1')(vgg16_imgnet_tensor)
+vgg16_imgnet_tensor = Dense(4096, activation='relu', name='fullyconnected_2')(vgg16_imgnet_tensor)
 vgg16_imgnet_tensor = Dense(n_classes, activation='softmax', name='classifier')(vgg16_imgnet_tensor)
 
 #Gerar modelo
