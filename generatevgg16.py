@@ -24,7 +24,7 @@ if (len(sys.argv) >= 5):
 	filename = sys.argv[4]
 
 #Baixar o modelo treinado na ImageNet sem as camadas de input e output, com max pooling; i.e Baixar camadas convolucionais
-vgg16_imgnet = VGG16(weights='imagenet', include_top=False, input_tensor=Input(shape=in_shape, name='input'), pooling='softmax')
+vgg16_imgnet = VGG16(weights='imagenet', include_top=False, input_tensor=Input(shape=in_shape, name='input'))
 vgg16_imgnet.summary()
 
 #Congelar as camadas convolucionas
