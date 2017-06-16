@@ -3,12 +3,11 @@
 #Usage:
 #argv[1] = output image height
 #argv[2] = output image width
-#argv[3] = output image # channels
-#argv[4] = # of batches
-#argv[5] = path to load input images
-#argv[6] = path to save output arrays
-#argv[7] = prefix for the arrays' filenames
-#argv[8] = bool to apply random variations
+#argv[3] = # of batches
+#argv[4] = path to load input images
+#argv[5] = path to save output arrays
+#argv[6] = prefix for the arrays' filenames
+#argv[7] = bool to apply random variations
 
 from keras.preprocessing.image import ImageDataGenerator
 from math import ceil
@@ -18,26 +17,23 @@ import sys
 import os.path
 
 out_shape = (224, 224)
-color = 'rgb'
 dataset_rep_count = 10
 in_path = os.path.join("..", "Data", "Datasets", "filtered")
 out_path = os.path.join("..", "Data", "Datasets", "keras")
 out_prefix = ""
 rand = True
-if (len(sys.argv) >= 4):
+if (len(sys.argv) >= 3):
 	out_shape = (int(sys.argv[1]), int(sys.argv[2]))
-	if (int(sys.argv[3])):
-		color = 'grayscale'
+if (len(sys.argv) >= 4):
+	dataset_rep_count = int(sys.argv[3])
 if (len(sys.argv) >= 5):
-	dataset_rep_count = int(sys.argv[4])
+	in_path = sys.argv[4]
 if (len(sys.argv) >= 6):
-	in_path = sys.argv[5]
+	out_path = sys.argv[5]
 if (len(sys.argv) >= 7):
-	out_path = sys.argv[6]
+	out_prefix = sys.argv[6] + "_"
 if (len(sys.argv) >= 8):
-	out_prefix = sys.argv[7] + "_"
-if (len(sys.argv) >= 9):
-	rand = (sys.argv[8] == 'true')
+	rand = (sys.argv[7] == 'true')
 
 batch_size = 256
 img_gen = ImageDataGenerator(fill_mode='constant', cval=0.0)

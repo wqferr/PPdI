@@ -7,7 +7,7 @@
 #argv[4] = filename to store the generated Model
 
 from keras.applications.vgg16 import VGG16
-from keras.layers import Input, Flatten, Dense
+from keras.layers import Flatten, Dense
 from keras.models import Model
 import os.path
 import sys
@@ -24,7 +24,7 @@ if (len(sys.argv) >= 5):
 	filename = sys.argv[4]
 
 #Baixar o modelo treinado na ImageNet sem as camadas de input e output, com max pooling; i.e Baixar camadas convolucionais
-vgg16_imgnet = VGG16(weights='imagenet', include_top=False, input_tensor=Input(shape=in_shape, name='input'))
+vgg16_imgnet = VGG16(weights='imagenet', include_top=False, input_shape=in_shape)
 vgg16_imgnet.summary()
 
 #Congelar as camadas convolucionas
@@ -32,13 +32,13 @@ for layer in vgg16_imgnet.layers:
 	layer.trainable = False
 
 #Adicionar camadas fully-connected
-vgg16_imgnet_tensor = Flatten(name='flatten')(vgg16_imgnet.output)
-vgg16_imgnet_tensor = Dense(4096, activation='relu', name='fullyconnected_1')(vgg16_imgnet_tensor)
-vgg16_imgnet_tensor = Dense(4096, activation='relu', name='fullyconnected_2')(vgg16_imgnet_tensor)
-vgg16_imgnet_tensor = Dense(n_classes, activation='softmax', name='classifier')(vgg16_imgnet_tensor)
+new_tensor = Flatten(name='flatten')(vgg16_imgnet.output)
+new_tensor = Dense(4096, activation='relu', name='fullyconnected_1')(new_tensor)
+new_tensor = Dense(4096, activation='relu', name='fullyconnected_2')(new_tensor)
+new_tensor = Dense(n_classes, activation='softmax', name='classifier')(new_tensor)
 
 #Gerar modelo
-new_vgg16_imgnet = Model(vgg16_imgnet.input, vgg16_imgnet_tensor)
+new_vgg16_imgnet = Model(vgg16_imgnet.input, new_tensor)
 new_vgg16_imgnet.compile(loss='mean_squared_error', optimizer='sgd', metrics=['accuracy'])
 new_vgg16_imgnet.summary()
 
