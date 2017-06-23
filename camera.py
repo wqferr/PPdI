@@ -4,11 +4,11 @@ import matplotlib.pyplot as plt
 import numpy as np
 import cv2
 
-model_filename = "../Data/CNN/vgg16_fine_tuned.h5"
+model_filename = "../Data/CNN/vgg16_fine_tuned_3.h5"
 cnn = models.load_model(model_filename)
 cnn.summary()
 
-classes = ["Bycicle", "Car", "Dog", "Motorcycle", "No Parking", "Pedestre", "Pedestrian", "Toll", "Stop Light", "Truck"]
+classes = ["Bycicle", "Car", "Dog", "Motorcycle", "No Parking", "Pedestrian", "Stop Light", "Stop Sign", "Toll", "Truck"]
 
 points = range(len(classes))
 fig = plt.figure()
