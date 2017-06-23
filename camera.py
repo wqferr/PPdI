@@ -21,7 +21,7 @@ if (len(sys.argv) >= 3):
 cnn = models.load_model(model_filename)
 cnn.summary()
 
-points = np.linspace(0, 9.5, 10)
+points = np.linspace(0.5, 9.5, 10)
 fig = plt.figure()
 fig.canvas.set_window_title("CNN Output")
 sub_plt = fig.add_subplot(111)
@@ -32,7 +32,7 @@ sub_plt.set_xticks(points)
 sub_plt.set_xticklabels(classes, rotation='vertical', horizontalalignment='center')
 plt.show(block=False)
 
-bars = sub_plt.bar(points, np.zeros(len(classes)))
+bars = sub_plt.bar(points-0.4, np.zeros(len(classes)))
 cam = cv2.VideoCapture(1)
 while True:
 	img = cam.read()[1]
@@ -44,7 +44,7 @@ while True:
 	print(classes[np.argmax(pred)])
 
 	bars.remove()
-	bars = sub_plt.bar(points, pred)
+	bars = sub_plt.bar(points-0.4, pred)
 	fig.canvas.draw()
 
 	ch = cv2.waitKey(1)
