@@ -9,6 +9,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import cv2
 import os.path
+import sys
 
 model_filename = os.path.join("..", "Data", "CNN", "vgg16_fine_tuned_3.h5")
 classes = ["Bycicle", "Car", "Dog", "Motorcycle", "No Parking", "Pedestrian", "Stop Light", "Stop Sign", "Toll", "Truck"]
@@ -20,7 +21,7 @@ if (len(sys.argv) >= 3):
 cnn = models.load_model(model_filename)
 cnn.summary()
 
-points = range(len(classes))
+points = np.linspace(0, 9.5, 10)
 fig = plt.figure()
 fig.canvas.set_window_title("CNN Output")
 sub_plt = fig.add_subplot(111)
