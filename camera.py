@@ -30,10 +30,11 @@ sub_plt.set_xlabel("Class")
 sub_plt.set_ylabel("Value")
 sub_plt.set_xticks(points)
 sub_plt.set_xticklabels(classes, rotation='vertical', horizontalalignment='center')
-plt.show(block=False)
-
 bars = sub_plt.bar(points-0.4, np.zeros(len(classes)))
 cam = cv2.VideoCapture(1)
+fig.tight_layout()
+
+plt.show(block=False)
 while True:
 	img = cam.read()[1]
 	cv2.imshow("Imagem", img)
