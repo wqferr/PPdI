@@ -1,14 +1,24 @@
+#Author: Eduardo Santos Carlos de Souza
+
+#Usage:
+#argv[1] = path to the CNN
+#argv[2] = array of the output classes
+
 from keras import models
-from keras.preprocessing import image
 import matplotlib.pyplot as plt
 import numpy as np
 import cv2
+import os.path
 
-model_filename = "../Data/CNN/vgg16_fine_tuned_3.h5"
+model_filename = os.path.join("..", "Data", "CNN", "vgg16_fine_tuned_3.h5")
+classes = ["Bycicle", "Car", "Dog", "Motorcycle", "No Parking", "Pedestrian", "Stop Light", "Stop Sign", "Toll", "Truck"]
+if (len(sys.argv) >= 2):
+	model_filename = sys.argv[1]
+if (len(sys.argv) >= 3):
+	classes = sys.argv[2].split(',')
+
 cnn = models.load_model(model_filename)
 cnn.summary()
-
-classes = ["Bycicle", "Car", "Dog", "Motorcycle", "No Parking", "Pedestrian", "Stop Light", "Stop Sign", "Toll", "Truck"]
 
 points = range(len(classes))
 fig = plt.figure()
@@ -21,7 +31,7 @@ sub_plt.set_xticks(points)
 sub_plt.set_xticklabels(classes, rotation='vertical', horizontalalignment='center')
 plt.show(block=False)
 
-bars = sub_plt.bar(points, np.zeros(10))
+bars = sub_plt.bar(points, np.zeros(len(classes)))
 cam = cv2.VideoCapture(1)
 while True:
 	img = cam.read()[1]
