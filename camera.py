@@ -29,8 +29,6 @@ while True:
 
 	img = cv2.resize(cv2.cvtColor(img, cv2.COLOR_BGR2RGB), (64, 64))
 	img = img.reshape((1, img.shape[0], img.shape[1], img.shape[2]))
-	#img = image.img_to_array(image.load_img("/home/wheatley/Desktop/a.jpg", target_size=(64, 64)))
-	#img = img.reshape((1, img.shape[0], img.shape[1], img.shape[2]))
 	pred = cnn.predict(img, batch_size=1)[0]
 	print(classes[np.argmax(pred)])
 
