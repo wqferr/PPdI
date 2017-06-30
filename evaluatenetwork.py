@@ -11,9 +11,7 @@ import numpy as np
 import sys
 
 #Argumentos
-model_filename = os.path.join("..", "Data", "CNN", "vgg16_imgnet.h5")
-if (os.path.isfile(os.path.join("..", "Data", "CNN", "vgg16_fine_tuned_3.h5"))):
-	model_filename = os.path.join("..", "Data", "CNN", "vgg16_fine_tuned_3.h5")
+model_filename = os.path.join("..", "Data", "CNN", "vgg16_trained.h5")
 images_filename = os.path.join("..", "Data", "Datasets", "keras", "test_images.npy")
 labels_filename = os.path.join("..", "Data", "Datasets", "keras", "test_labels.npy")
 if (len(sys.argv) >= 3):
