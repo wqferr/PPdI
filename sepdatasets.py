@@ -5,11 +5,13 @@ from sys import argv
 from random import shuffle
 from shutil import copyfile as cp
 
+# get an argument from argv with a default value
 def get_arg(n, default):
     if len(argv) > n:
         return argv[n]
     return default
 
+# execute cp command and add prefix if required
 def copy_img(lst, frm, to, rename):
     for entry in lst:
         name = os.path.basename(entry.name)
@@ -39,10 +41,11 @@ if __name__ == '__main__':
     train_dir = os.path.join(out_dir, train_subdir)
     test_dir = os.path.join(out_dir, test_subdir)
 
+	# create output directory if it doesn't exist
     os.makedirs(train_dir, 0o777, True)
     os.makedirs(test_dir, 0o777, True)
 
-
+	# list all images in input directory
     images = []
     entries = os.scandir(src_dir)
     for entry in entries:
@@ -50,11 +53,14 @@ if __name__ == '__main__':
             images.append(entry)
     del entries
 
+	# order them randomly
     shuffle(images)
+	
+	# n_test first will be part of the test set, and the remaining will be used for training
     n_test = math.ceil(len(images) * test_percent)
-
     train_images = images[n_test:]
     test_images = images[:n_test]
     
+	# copy images to test and train directories
     copy_img(train_images, src_dir, train_dir, rename)
     copy_img(test_images, src_dir, test_dir, rename)
