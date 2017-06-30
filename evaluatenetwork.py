@@ -10,6 +10,7 @@ import os.path
 import numpy as np
 import sys
 
+#Argumentos
 model_filename = os.path.join("..", "Data", "CNN", "vgg16_imgnet.h5")
 if (os.path.isfile(os.path.join("..", "Data", "CNN", "vgg16_fine_tuned_3.h5"))):
 	model_filename = os.path.join("..", "Data", "CNN", "vgg16_fine_tuned_3.h5")
@@ -21,11 +22,13 @@ if (len(sys.argv) >= 3):
 if (len(sys.argv) >= 4):
 	model_filename = sys.argv[3]
 
+#Carregar modelo e imagens
 images = np.load(images_filename, mmap_mode='r')
 labels = np.load(labels_filename, mmap_mode='r')
 cnn = models.load_model(model_filename)
 cnn.summary()
 
+#Avaliar rede
 batch_size = 256
 score = cnn.evaluate(images, labels, batch_size=batch_size)
 print("Loss: %.4lf\nAccuracy: %.4lf" % (score[0], score[1]))
