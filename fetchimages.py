@@ -7,6 +7,7 @@ from six.moves.urllib.parse import urlparse
 from icrawler import ImageDownloader
 from icrawler.builtin.google import GoogleFeeder, GoogleParser, GoogleImageCrawler
 
+# overload downloader so as to name gathered images with uuid4
 class Downloader(ImageDownloader):
     def get_filename(self, task, default_ext):
         url_path = urlparse(task['file_url'])[2]
@@ -42,11 +43,13 @@ if __name__ == '__main__':
     except IndexError:
         path = os.path.join('data', 'datasets', 'fetched', keyword)
 
+	# create web crawler
     crawler = GoogleImageCrawler(GoogleFeeder, GoogleParser, Downloader,
             1, 1, n_thr,
             dict(
                 backend='FileSystem',
                 root_dir=path
             ))
-
+	
+	# retreive images
     crawler.crawl(keyword, offset, n_img)
