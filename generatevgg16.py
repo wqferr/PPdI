@@ -11,11 +11,12 @@ from keras.applications.vgg16 import VGG16
 from keras.layers import Flatten, Dense
 from keras.models import Model
 import os.path
+import gc
 import sys
 
 #Variaveis de entrada e saida da rede
-in_shape = (224, 224, 3)
-n_classes = 1000
+in_shape = (64, 64, 3)
+n_classes = 10
 model_filename = os.path.join("..", "Data", "CNN", "vgg16_imgnet.h5")
 fine_tune = False
 if (len(sys.argv) >= 3):
@@ -36,6 +37,9 @@ if (not fine_tune):
 	for layer in vgg16_imgnet.layers:
 		layer.trainable = False
 
+for layer in vgg16_imgnet.layers:
+	print(layer.trainable)
+
 #Adicionar camadas fully-connected
 new_tensor = Flatten(name='flatten')(vgg16_imgnet.output)
 new_tensor = Dense(4096, activation='relu', name='fullyconnected_1')(new_tensor)
@@ -49,3 +53,4 @@ new_vgg16_imgnet.summary()
 
 #Salvar modelo
 new_vgg16_imgnet.save(model_filename)
+gc.collect()

@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
-python trainnetwork.py 30
+python trainnetwork.py 5
 python evaluatenetwork.py

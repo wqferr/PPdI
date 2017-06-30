@@ -17,7 +17,7 @@ import os.path
 
 #Argumentos
 in_path = os.path.join("..", "Data", "Datasets", "separated", "train")
-out_shape = (224, 224)
+out_shape = (64, 64)
 out_path = os.path.join("..", "Data", "Datasets", "keras", "train")
 rand = True
 dataset_rep_count = 10
