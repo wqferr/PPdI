@@ -1,2 +1,2 @@
-python trainnetwork.py 30
-python evaluatenetwork.py
+python3 trainnetwork.py 30
+python3 evaluatenetwork.py
