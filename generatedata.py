@@ -15,9 +15,9 @@ import time
 import sys
 import os.path
 
-in_path = os.path.join("..", "Data", "Datasets", "filtered", "train")
+in_path = os.path.join("..", "Data", "Datasets", "separated", "train")
 out_shape = (224, 224)
-out_path = os.path.join("..", "Data", "Datasets", "keras") + "train"
+out_path = os.path.join("..", "Data", "Datasets", "keras", "train")
 rand = True
 dataset_rep_count = 10
 if (len(sys.argv) >= 2):

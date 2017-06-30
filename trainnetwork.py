@@ -15,11 +15,11 @@ import sys
 import time
 
 epochs = 30
-model_filename = os.path.join("..", "Data", "vgg16_imgnet.h5")
-if (os.path.isfile(os.path.join("..", "Data", "vgg16_trained.h5"))):
-	model_filename = os.path.join("..", "Data", "vgg16_trained.h5")
+model_filename = os.path.join("..", "Data", "CNN", "vgg16_imgnet.h5")
+if (os.path.isfile(os.path.join("..", "Data", "CNN", "vgg16_fine_tuned_3.h5"))):
+	model_filename = os.path.join("..", "Data", "CNN", "vgg16_fine_tuned_3.h5")
 arrays_filepath = os.path.join("..", "Data", "Datasets", "keras")
-out_filename = os.path.join("..", "Data", "vgg16_trained.h5")
+out_filename = os.path.join("..", "Data", "CNN", "vgg16_trained.h5")
 evalu = False
 if (len(sys.argv) >= 2):
 	epochs = int(sys.argv[1])

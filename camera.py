@@ -2,7 +2,7 @@
 
 #Usage:
 #argv[1] = path to the CNN
-#argv[2] = array of the output classes
+#argv[2] = array of the output classes separated by ','
 
 from keras import models
 import matplotlib.pyplot as plt
@@ -11,7 +11,9 @@ import cv2
 import os.path
 import sys
 
-model_filename = os.path.join("..", "Data", "CNN", "vgg16_fine_tuned_3.h5")
+model_filename = os.path.join("..", "Data", "CNN", "vgg16_imgnet.h5")
+if (os.path.isfile(os.path.join("..", "Data", "CNN", "vgg16_fine_tuned_3.h5"))):
+	model_filename = os.path.join("..", "Data", "CNN", "vgg16_fine_tuned_3.h5")
 classes = ["Bycicle", "Car", "Dog", "Motorcycle", "No Parking", "Pedestrian", "Stop Light", "Stop Sign", "Toll", "Truck"]
 if (len(sys.argv) >= 2):
 	model_filename = sys.argv[1]
@@ -21,8 +23,8 @@ if (len(sys.argv) >= 3):
 cnn = models.load_model(model_filename)
 cnn.summary()
 
-points = np.linspace(0.5, 9.5, 10)
-fig = plt.figure()
+points = np.linspace(0.5, len(classes)-0.5, len(classes))
+fig = plt.figure(figsize=(5, 5))
 fig.canvas.set_window_title("CNN Output")
 sub_plt = fig.add_subplot(111)
 sub_plt.set_title("CNN Output")
@@ -31,15 +33,16 @@ sub_plt.set_ylabel("Value")
 sub_plt.set_xticks(points)
 sub_plt.set_xticklabels(classes, rotation='vertical', horizontalalignment='center')
 bars = sub_plt.bar(points-0.4, np.zeros(len(classes)))
-cam = cv2.VideoCapture(1)
+cam = cv2.VideoCapture(0)
 fig.tight_layout()
+img_shape = (cnn.get_layer(index=0).input_shape[1], cnn.get_layer(index=0).input_shape[2])
 
 plt.show(block=False)
 while True:
 	img = cam.read()[1]
 	cv2.imshow("Imagem", img)
 
-	img = cv2.resize(cv2.cvtColor(img, cv2.COLOR_BGR2RGB), (64, 64))
+	img = cv2.resize(cv2.cvtColor(img, cv2.COLOR_BGR2RGB), img_shape)
 	img = img.reshape((1, img.shape[0], img.shape[1], img.shape[2]))
 	pred = cnn.predict(img, batch_size=1)[0]
 	print(classes[np.argmax(pred)])
