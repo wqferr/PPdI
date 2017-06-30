@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-python generatevgg16.py
-python sepdatasets.py
-python generatedata.py ../Data/Datasets/separated/train/ 64 64 ../Data/Datasets/keras/train
-python generatedata.py ../Data/Datasets/separated/test/ 64 64 ../Data/Datasets/keras/test 0 1
+python3 generatevgg16.py
+python3 sepdatasets.py
+python3 generatedata.py ../Data/Datasets/separated/train/ 64 64 ../Data/Datasets/keras/train
+python3 generatedata.py ../Data/Datasets/separated/test/ 64 64 ../Data/Datasets/keras/test 0 1
