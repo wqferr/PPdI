@@ -37,9 +37,6 @@ if (not fine_tune):
 	for layer in vgg16_imgnet.layers:
 		layer.trainable = False
 
-for layer in vgg16_imgnet.layers:
-	print(layer.trainable)
-
 #Adicionar camadas fully-connected
 new_tensor = Flatten(name='flatten')(vgg16_imgnet.output)
 new_tensor = Dense(4096, activation='relu', name='fullyconnected_1')(new_tensor)
